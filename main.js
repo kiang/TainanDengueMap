@@ -43,12 +43,13 @@ function initialize() {
         map.data.revertStyle();
         map.data.overrideStyle(event.feature, {fillColor: 'white'});
         $('#detial > #content').empty();
-        $('#detial > #content').append('<div>' + Cunli + ':' + event.feature.getProperty('num') + '</div>');
+        $('#detial > #content').append('<div>' + Cunli + ' ：' + event.feature.getProperty('num') + ' 例</div>');
     });
 
     map.data.addListener('mouseout', function (event) {
         map.data.revertStyle();
         $('#detial > #content').empty();
+        $('#detial > #content').append('&nbsp;');
     });
 
     map.data.addListener('click', function (event) {
