@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>台南登革熱地圖</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0px;
+                padding: 0px
+            }
+            #map-canvas {
+                height: 60%;
+                width: 80%;
+                margin: 0px;
+                padding: 0px;
+                position: absolute;
+                left: 0px;
+            }
+            #histogram {
+                height: 40%;
+                width: 100%;
+                min-width: 310px;
+                position: absolute;
+                bottom: 0px;
+            }
+            #myTabContent{
+                height: 85%;
+                width: 100%;
+            }
+            #myTabContent > div{
+                height: 100%;
+                width: 100%;
+            }
+            #detial {
+                height: 60%;
+                width: 20%;
+                position: absolute;
+                right: 0px;
+                padding: 10px;
+            }
+            #title{
+                text-align:center;
+                padding: 10px;
+            }
+        </style>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+        <script src="//code.highcharts.com/stock/highstock.js"></script>
+        <script src="//code.highcharts.com/stock/modules/exporting.js"></script>
+        <script src="ColorBar.js"></script>
+        <script src="main.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div id="map-canvas"></div>
+        <div id="detial">
+            <div id="title"></div>
+            <hr>
+            <div id="content"></div>
+        </div>
+        <div id='histogram'>
+            <ul id='myTab' class='nav nav-tabs'>
+                <li class="active"><a href="#total" data-toggle="tab">台南市</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade in active" id="total"></div>
+            </div>
+        </div>
+    </body>
+    <script>
+
+    </script>
+</html>
