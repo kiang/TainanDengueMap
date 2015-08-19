@@ -95,7 +95,7 @@ function createStockChart(Cunli) {
                 point: {
                     events: {
                         click: function () {
-                            alert('hi');
+                            
                         }
                     }
                 },
