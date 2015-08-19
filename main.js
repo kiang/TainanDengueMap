@@ -13,9 +13,9 @@ function initialize() {
         center: {lat: 23.10, lng: 120.50}
     });
 
-//    $.getJSON('cunliTN.json', function (data) {
-//        town = map.data.addGeoJson(data);
-//    });
+    $.getJSON('cunliTN.json', function (data) {
+        town = map.data.addGeoJson(data);
+    });
 //
 //    town.forEach(function (value) {
 //        var key = value.getProperty('TOWNNAME');
