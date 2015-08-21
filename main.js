@@ -4,6 +4,7 @@ var map;
 $.getJSON('DengueTN.json', function (data) {
     DengueTN = data
 });
+var currentPlayIndex = false;
 
 function initialize() {
     /*map setting*/
@@ -19,8 +20,8 @@ function initialize() {
     cunli.forEach(function (value) {
         var key = value.getProperty('T_Name') + value.getProperty('V_Name');
         var count = 0;
-        if(DengueTN[key]) {
-            DengueTN[key].forEach(function(val) {
+        if (DengueTN[key]) {
+            DengueTN[key].forEach(function (val) {
                 count += val[1];
             });
         }
@@ -66,6 +67,25 @@ function initialize() {
         }
     });
     createStockChart('total');
+
+    $('#playButton').click(function () {
+        var maxIndex = DengueTN['total'].length;
+        if (false === currentPlayIndex) {
+            currentPlayIndex = 0;
+        } else {
+            currentPlayIndex += 1;
+        }
+
+        if (currentPlayIndex < maxIndex) {
+            showDateMap(new Date(DengueTN['total'][currentPlayIndex][0]));
+            setTimeout(function () {
+                $('#playButton').trigger('click');
+            }, 300);
+        } else {
+            currentPlayIndex = false;
+        }
+        return false;
+    });
 }
 
 function createStockChart(Cunli) {
@@ -95,7 +115,7 @@ function createStockChart(Cunli) {
                 point: {
                     events: {
                         click: function () {
-                            
+                            showDateMap(new Date(this.x));
                         }
                     }
                 },
@@ -106,6 +126,27 @@ function createStockChart(Cunli) {
                 name: Cunli,
                 data: series,
             }]
+    });
+}
+
+function showDateMap(clickedDate) {
+    var yyyy = clickedDate.getFullYear().toString();
+    var mm = (clickedDate.getMonth() + 1).toString();
+    var dd = clickedDate.getDate().toString();
+    var clickedDateKey = yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]);
+    $('#detail > #title').text(clickedDateKey);
+    cunli.forEach(function (value) {
+        var key = value.getProperty('T_Name') + value.getProperty('V_Name');
+        var count = 0;
+        if (DengueTN[key]) {
+            DengueTN[key].forEach(function (val) {
+                var recordDate = new Date(val[0]);
+                if (recordDate <= clickedDate) {
+                    count += val[1];
+                }
+            });
+        }
+        value.setProperty('num', count);
     });
 }
 
