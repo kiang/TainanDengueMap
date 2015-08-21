@@ -42,14 +42,14 @@ function initialize() {
         var Cunli = event.feature.getProperty('T_Name') + event.feature.getProperty('V_Name');
         map.data.revertStyle();
         map.data.overrideStyle(event.feature, {fillColor: 'white'});
-        $('#detial > #content').empty();
-        $('#detial > #content').append('<div>' + Cunli + ' ：' + event.feature.getProperty('num') + ' 例</div>');
+        $('#detail > #content').empty();
+        $('#detail > #content').append('<div>' + Cunli + ' ：' + event.feature.getProperty('num') + ' 例</div>');
     });
 
     map.data.addListener('mouseout', function (event) {
         map.data.revertStyle();
-        $('#detial > #content').empty();
-        $('#detial > #content').append('&nbsp;');
+        $('#detail > #content').empty();
+        $('#detail > #content').append('&nbsp;');
     });
 
     map.data.addListener('click', function (event) {
