@@ -68,7 +68,7 @@ function initialize() {
     });
     createStockChart('total');
 
-    $('#playButton').click(function () {
+    $('#playButton1').click(function () {
         var maxIndex = DengueTN['total'].length;
         if (false === currentPlayIndex) {
             currentPlayIndex = 0;
@@ -79,7 +79,26 @@ function initialize() {
         if (currentPlayIndex < maxIndex) {
             showDateMap(new Date(DengueTN['total'][currentPlayIndex][0]));
             setTimeout(function () {
-                $('#playButton').trigger('click');
+                $('#playButton1').trigger('click');
+            }, 300);
+        } else {
+            currentPlayIndex = false;
+        }
+        return false;
+    });
+    
+    $('#playButton2').click(function () {
+        var maxIndex = DengueTN['total'].length;
+        if (false === currentPlayIndex) {
+            currentPlayIndex = 0;
+        } else {
+            currentPlayIndex += 1;
+        }
+
+        if (currentPlayIndex < maxIndex) {
+            showDayMap(new Date(DengueTN['total'][currentPlayIndex][0]));
+            setTimeout(function () {
+                $('#playButton2').trigger('click');
             }, 300);
         } else {
             currentPlayIndex = false;
@@ -115,7 +134,7 @@ function createStockChart(Cunli) {
                 point: {
                     events: {
                         click: function () {
-                            showDateMap(new Date(this.x));
+                            showDayMap(new Date(this.x));
                         }
                     }
                 },
@@ -134,7 +153,7 @@ function showDateMap(clickedDate) {
     var mm = (clickedDate.getMonth() + 1).toString();
     var dd = clickedDate.getDate().toString();
     var clickedDateKey = yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]);
-    $('#detail > #title').text(clickedDateKey);
+    $('#detail > #title').text(clickedDateKey + ' 累積病例');
     cunli.forEach(function (value) {
         var key = value.getProperty('T_Name') + value.getProperty('V_Name');
         var count = 0;
@@ -142,6 +161,26 @@ function showDateMap(clickedDate) {
             DengueTN[key].forEach(function (val) {
                 var recordDate = new Date(val[0]);
                 if (recordDate <= clickedDate) {
+                    count += val[1];
+                }
+            });
+        }
+        value.setProperty('num', count);
+    });
+}
+
+function showDayMap(clickedDate) {
+    var yyyy = clickedDate.getFullYear().toString();
+    var mm = (clickedDate.getMonth() + 1).toString();
+    var dd = clickedDate.getDate().toString();
+    var clickedDateKey = yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]);
+    $('#detail > #title').text(clickedDateKey + ' 當日病例');
+    cunli.forEach(function (value) {
+        var key = value.getProperty('T_Name') + value.getProperty('V_Name');
+        var count = 0;
+        if (DengueTN[key]) {
+            DengueTN[key].forEach(function (val) {
+                if (clickedDateKey == val[0]) {
                     count += val[1];
                 }
             });
