@@ -3,11 +3,11 @@
 $json = json_decode(file_get_contents(dirname(__DIR__) . '/DengueTN.json'), true);
 
 /*
- * looking for 0823 record
+ * looking for 0824 record
  */
 foreach ($json['total'] AS $day) {
-    if ($day[0] === '2015-08-23') {
-        die('0823 record existed');
+    if ($day[0] === '2015-08-24') {
+        die('0824 record existed');
     }
 }
 
@@ -30,14 +30,14 @@ while ($line = fgetcsv($fh, 2048)) {
             $json[$areaKey] = array();
         }
         $json[$areaKey][] = array(
-            '2015-08-23',
+            '2015-08-24',
             $line[6],
         );
     }
 }
 
 $json['total'][] = array(
-    '2015-08-23',
+    '2015-08-24',
     $total,
 );
 
