@@ -12,87 +12,103 @@
         <style>
             html, body {
                 height: 100%;
-                margin: 0px;
-                padding: 0px
+                width: 100%;
+                margin: 0;
+                padding: 0;
             }
             #map-canvas {
-                height: 60%;
-                width: 80%;
-                margin: 0px;
-                padding: 0px;
-                position: absolute;
-                left: 0px;
+                height: 100%;
+                width: 100%;
             }
             #histogram {
                 height: 40%;
                 width: 100%;
-                min-width: 310px;
-                position: absolute;
-                bottom: 0px;
+                min-height: 300px;
             }
-            #myTabContent{
+            #myTabContent {
                 height: 85%;
                 width: 100%;
+                min-height: 300px;
             }
-            #myTabContent > div{
-                height: 100%;
-                width: 100%;
-            }
-            #detail {
-                height: 60%;
-                width: 20%;
-                position: absolute;
-                right: 0px;
+            #title {
+                text-align: center;
                 padding: 10px;
             }
-            #title{
-                text-align:center;
-                padding: 10px;
+            .colorBox {
+                width: 1em;
+                height: 1em;
+                border: 1px solid #34495E;
+                display: inline-block;
+                margin: 0 3px;
             }
         </style>
+    </head>
+    <body>
+        <script>
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=1393405437614114&version=v2.3";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, "script", "facebook-jssdk"));
+        </script>
+        <div class="container">
+            <div class="row">
+                <p class="hidden-sm hidden-xs">&nbsp;</p>
+                <div id="map-canvas" class="col-md-12"></div>
+                <div id="detail" class="col-md-12">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        <h3 id="title"></h3>
+                        <div>病例數
+                            <span class="colorBox" style="background-color: white;"></span>&nbsp;0
+                            <span class="colorBox" style="background-color: green;"></span>&nbsp;1~2
+                            <span class="colorBox" style="background-color: yellow;"></span>&nbsp;3~10
+                            <br class="hidden-md hidden-lg">
+                            <span class="colorBox" style="background-color: orange;"></span>&nbsp;11~20
+                            <span class="colorBox" style="background-color: red;"></span>&nbsp;21~50
+                            <span class="colorBox" style="background-color: purple;"></span>&nbsp;>50
+                        </div>
+                        <hr>
+                        <h2 id="content" class="text-muted">在地圖上滑動或點選以顯示數據</h2>
+                        <div class="btn-group btn-group-justified">
+                            <a class="btn btn-primary btn-lg" id="playButton1" href="#">
+                                <span class="glyphicon glyphicon-play" style="display: none"></span>&nbsp;累積病例變化
+                            </a>
+                            <a class="btn btn-primary btn-lg" id="playButton2" href="#">
+                                <span class="glyphicon glyphicon-play" style="display: none"></span>&nbsp;日病例變化
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <p>&nbsp;</p>
+                        <div id="fb-root"></div>
+                        <div class="fb-page" data-href="https://www.facebook.com/k.olc.tw" data-width="800" data-hide-cover="true" data-show-facepile="true" data-show-posts="false"></div>
+                    </div>
+                </div>
+                <p class="hidden-md hidden-lg">&nbsp;</p>
+                <div id="histogram" class="col-md-12">
+                    <ul id="myTab" class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#total" data-toggle="tab">台南市</a>
+                        </li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div class="text-muted pull-right">*點選下方長條圖示會在地圖上呈現當日病例分佈</div>
+                        <div class="tab-pane fade in active" id="total"></div>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+            </div>
+        </div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="//maps.googleapis.com/maps/api/js?v=3"></script>
         <script src="//code.highcharts.com/stock/highstock.js"></script>
         <script src="//code.highcharts.com/stock/modules/exporting.js"></script>
         <script src="ColorBar.js"></script>
         <script src="main.js"></script>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div id="map-canvas"></div>
-        <div id="detail">
-            <div id="title"></div>
-            <hr>
-            <div id="content" style="font-size: 30px; margin-bottom: 80px;">&nbsp;</div>
-            <div style="text-align: center;">
-                <a class="btn btn-primary" id="playButton1" href="#">累積病例變化</a>
-                <a class="btn btn-primary" id="playButton2" href="#">日病例變化</a>
-            </div>
-            <div id="fb-root"></div>
-                <script>(function (d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id))
-                            return;
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=1393405437614114&version=v2.3";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'));</script>
-            <div class="fb-page" data-href="https://www.facebook.com/k.olc.tw" data-width="500" data-hide-cover="true" data-show-facepile="true" data-show-posts="false"></div>
-            
-            <div><br />點選下方長條圖示會在地圖上呈現當日病例分佈</div>
-        </div>
-        <div id='histogram'>
-            <ul id='myTab' class='nav nav-tabs'>
-                <li class="active"><a href="#total" data-toggle="tab">台南市</a></li>
-            </ul>
-            <div id="myTabContent" class="tab-content">
-                <div class="tab-pane fade in active" id="total"></div>
-            </div>
-        </div>
     </body>
-    <script>
-
-    </script>
 </html>
