@@ -54,7 +54,7 @@ function initialize() {
     });
 
     map.data.addListener('click', function (event) {
-        var Cunli = value.getProperty('VILLAGE_ID');
+        var Cunli = event.feature.getProperty('VILLAGE_ID');
         var CunliTitle = event.feature.getProperty('C_Name') + event.feature.getProperty('T_Name') + event.feature.getProperty('V_Name');
         if ($('#myTab a[name|="' + Cunli + '"]').tab('show').length === 0) {
             $('#myTab').append('<li><a name="' + Cunli + '" href="#' + Cunli + '" data-toggle="tab">' + CunliTitle +
