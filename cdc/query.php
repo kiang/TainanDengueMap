@@ -37,6 +37,8 @@ $replaces = array(
     '台南市安南區鹽田里' => '台南市安南區塩田里',
 );
 
+file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
+
 $fh = fopen(__DIR__ . '/Dengue_Daily.csv', 'r');
 $areaCounter = $timeCounter = array();
 while ($line = fgetcsv($fh, 2048)) {
@@ -78,6 +80,8 @@ while ($line = fgetcsv($fh, 2048)) {
         }
     }
 }
+
+ksort($areaCounter);
 
 $json = array();
 
