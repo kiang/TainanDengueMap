@@ -35,6 +35,7 @@ $replaces = array(
     '高雄市左營區部南里' => '高雄市左營區廍南里',
     '台南市學甲區煥昌里' => '台南市學甲區秀昌里',
     '台南市安南區鹽田里' => '台南市安南區塩田里',
+    '高雄市湖內區公館里' => '高雄市湖內區公舘里',
 );
 
 file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
@@ -45,7 +46,7 @@ while ($line = fgetcsv($fh, 2048)) {
     if (empty($line[7]))
         continue;
     foreach ($line AS $k => $v) {
-        $line[$k] = str_replace(array('　', ' '), '', mb_convert_encoding($v, 'utf-8', 'big5'));
+        $line[$k] = str_replace(array('　', ' '), '', $v);
     }
     $dayParts = explode('/', $line[2]);
     if ($dayParts[0] === '2015') {
