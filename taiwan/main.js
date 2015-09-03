@@ -16,8 +16,8 @@ function initialize() {
         center: {lat: 23.00, lng: 120.30}
     });
 
-    $.getJSON('../geojson/cunli.json', function (data) {
-        cunli = map.data.addGeoJson(data);
+    $.getJSON('cunli.json', function (data) {
+        cunli = map.data.addGeoJson(topojson.feature(data, data.objects.cunli));
     });
 
     cunli.forEach(function (value) {
