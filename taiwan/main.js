@@ -173,7 +173,7 @@ function showDateMap(clickedDate, cunli) {
 
     $('#title').html(clickedDateKey + ' 累積病例');
     cunli.forEach(function (value) {
-        var key = value.getProperty('T_Name') + value.getProperty('V_Name'),
+        var key = value.getProperty('VILLAGE_ID'),
             count = 0;
 
         if (DengueTW[key]) {
@@ -196,7 +196,7 @@ function showDayMap(clickedDate, cunli) {
 
     $('#title').html(clickedDateKey + ' 當日病例');
     cunli.forEach(function (value) {
-        var key = value.getProperty('T_Name') + value.getProperty('V_Name'),
+        var key = value.getProperty('VILLAGE_ID'),
             count = 0;
 
         if (DengueTW[key]) {
