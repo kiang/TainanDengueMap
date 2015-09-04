@@ -1,12 +1,13 @@
 $.ajaxSetup({async: false});
 
+var map,
+        currentPlayIndex = false,
+        cunli;
+
 $.getJSON('Dengue.json', function (data) {
     DengueTW = data
 });
 function initialize() {
-    var map,
-        currentPlayIndex = false,
-        cunli;
 
     /*map setting*/
     $('#map-canvas').height(window.outerHeight / 2.2);
@@ -22,7 +23,7 @@ function initialize() {
 
     cunli.forEach(function (value) {
         var key = value.getProperty('VILLAGE_ID'),
-            count = 0;
+                count = 0;
         if (DengueTW[key]) {
             DengueTW[key].forEach(function (val) {
                 count += val[1];
@@ -90,7 +91,7 @@ function initialize() {
         }
         return false;
     });
-    
+
     $('#playButton2').on('click', function () {
         var maxIndex = DengueTW['total'].length;
         if (false === currentPlayIndex) {
@@ -123,8 +124,8 @@ function createStockChart(Cunli, cunli) {
 
     Highcharts.setOptions({
         lang: {
-            months: ['一月', '二月', '三月', '四月', '五月', '六月',  '七月', '八月', '九月', '十月', '十一月', '十二月'],
-            shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月',  '七月', '八月', '九月', '十月', '十一月', '十二月'],
+            months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+            shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
             weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
             loading: '載入中'
         }
@@ -167,14 +168,14 @@ function createStockChart(Cunli, cunli) {
 
 function showDateMap(clickedDate, cunli) {
     var yyyy = clickedDate.getFullYear().toString(),
-        mm = (clickedDate.getMonth() + 1).toString(),
-        dd = clickedDate.getDate().toString(),
-        clickedDateKey = yyyy + '-' + (mm[1] ? mm : '0' + mm[0]) + '-' + (dd[1] ? dd : '0' + dd[0]);
+            mm = (clickedDate.getMonth() + 1).toString(),
+            dd = clickedDate.getDate().toString(),
+            clickedDateKey = yyyy + '-' + (mm[1] ? mm : '0' + mm[0]) + '-' + (dd[1] ? dd : '0' + dd[0]);
 
     $('#title').html(clickedDateKey + ' 累積病例');
     cunli.forEach(function (value) {
         var key = value.getProperty('VILLAGE_ID'),
-            count = 0;
+                count = 0;
 
         if (DengueTW[key]) {
             DengueTW[key].forEach(function (val) {
@@ -190,14 +191,14 @@ function showDateMap(clickedDate, cunli) {
 
 function showDayMap(clickedDate, cunli) {
     var yyyy = clickedDate.getFullYear().toString(),
-        mm = (clickedDate.getMonth() + 1).toString(),
-        dd = clickedDate.getDate().toString(),
-        clickedDateKey = yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]);
+            mm = (clickedDate.getMonth() + 1).toString(),
+            dd = clickedDate.getDate().toString(),
+            clickedDateKey = yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]);
 
     $('#title').html(clickedDateKey + ' 當日病例');
     cunli.forEach(function (value) {
         var key = value.getProperty('VILLAGE_ID'),
-            count = 0;
+                count = 0;
 
         if (DengueTW[key]) {
             DengueTW[key].forEach(function (val) {

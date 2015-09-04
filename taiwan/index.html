@@ -62,7 +62,7 @@
                 <div id="detail" class="col-md-12">
                     <div class="col-md-8 col-sm-12 col-xs-12">
                         <h3 id="title"></h3>
-                        <div>病例數
+                        <div style="float: left;">病例數
                             <span class="colorBox" style="background-color: white;"></span>&nbsp;0
                             <span class="colorBox" style="background-color: green;"></span>&nbsp;1~2
                             <span class="colorBox" style="background-color: yellow;"></span>&nbsp;3~10
@@ -71,6 +71,21 @@
                             <span class="colorBox" style="background-color: red;"></span>&nbsp;21~50
                             <span class="colorBox" style="background-color: purple;"></span>&nbsp;>50
                         </div>
+                        <div style="float: right;">快速定位
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-default" onclick="map.setCenter({lat: 25.053699, lng: 121.507837}); return false">台北</a>
+                                <a href="#" class="btn btn-default" onclick="map.setCenter({lat: 24.752504, lng: 121.771097}); return false">宜蘭</a>
+                                <a href="#" class="btn btn-default" onclick="map.setCenter({lat: 24.804498, lng: 120.988528}); return false">新竹</a>
+                                <a href="#" class="btn btn-default" onclick="map.setCenter({lat: 24.167804, lng: 120.658214}); return false">台中</a>
+                                <a href="#" class="btn btn-default" onclick="map.setCenter({lat: 23.477332, lng: 120.430085}); return false">嘉義</a><br />
+                                <a href="#" class="btn btn-default" onclick="map.setCenter({lat: 22.996169, lng: 120.201330}); return false">台南</a>
+                                <a href="#" class="btn btn-default" onclick="map.setCenter({lat: 22.643894, lng: 120.317828}); return false">高雄</a>
+                                <a href="#" class="btn btn-default" onclick="map.setCenter({lat: 22.674185, lng: 120.501103}); return false">屏東</a>
+                                <a href="#" class="btn btn-default" onclick="map.setCenter({lat: 23.999479, lng: 121.606658}); return false">花蓮</a>
+                                <a href="#" class="btn btn-default" onclick="map.setCenter({lat: 22.793229, lng: 121.124322}); return false">台東</a>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
                         <hr>
                         <h2 id="content" class="text-muted">在地圖上滑動或點選以顯示數據</h2>
                         <div class="btn-group btn-group-justified">
