@@ -4,12 +4,11 @@ $cunliCodes = array();
 $fh = fopen(dirname(__DIR__) . '/data.tainan/cunli_code.csv', 'r');
 while ($line = fgetcsv($fh, 2048)) {
     $cunliCodes[$line[1] . $line[3] . $line[5]] = $line[4];
-//    if($line[1] . $line[3] === '台南市麻豆區') {
+//    if(false !== strpos($line[1] . $line[3], '彰化縣員林')) {
 //        echo "{$line[5]}\n";
 //    }
 }
 fclose($fh);
-
 /*
  * Array
   (
@@ -40,6 +39,7 @@ $replaces = array(
     '台南市安南區鹽田里' => '台南市安南區塩田里',
     '高雄市湖內區公館里' => '高雄市湖內區公舘里',
     '台南市麻豆區晉江里' => '台南市麻豆區晋江里',
+    '彰化縣員林鎮民生里' => '彰化縣員林市民生里',
 );
 
 file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
