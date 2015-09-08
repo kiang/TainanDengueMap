@@ -5,7 +5,7 @@ var map,
         cunli;
 
 $.getJSON('Dengue.json', function (data) {
-    DengueTW = data
+    DengueTW = data;
 });
 function initialize() {
 
@@ -21,8 +21,11 @@ function initialize() {
         cunli = map.data.addGeoJson(topojson.feature(data, data.objects.cunli));
     });
 
+    var areas = [];
     cunli.forEach(function (value) {
         var key = value.getProperty('VILLAGE_ID'),
+                countyId = value.getProperty('COUNTY_ID'),
+                townId = value.getProperty('TOWN_ID'),
                 count = 0;
         if (DengueTW[key]) {
             DengueTW[key].forEach(function (val) {
@@ -30,7 +33,37 @@ function initialize() {
             });
         }
         value.setProperty('num', count);
+        
+        if(countyId.length === 2) {
+            countyId += '000';
+        }
+        if(!areas[countyId]) {
+            areas[countyId] = value.getProperty('C_Name');
+        }
+        if(!areas[townId]) {
+            areas[townId] = value.getProperty('C_Name') + value.getProperty('T_Name');
+        }
     });
+
+    var totalNum = 0, ignoreNum = 0;
+    var block = '下面病例數字未包含村里資訊，因此無法在地圖中顯示：<div class="clearfix"><br /></div>';
+    $.each(DengueTW, function (k, v) {
+        if (k.length !== 11) {
+            var num = 0;
+            for (i in v) {
+                num += v[i][1];
+            }
+            if (k !== 'total') {
+                ignoreNum += num;
+                block += '<div class="col-md-2">' + areas[k] + ': ' + num + '</div>';
+            } else {
+                totalNum = num;
+            }
+        }
+    })
+    block += '<div class="clearfix"><br /></div>';
+    block += '目前共有病例 ' + totalNum + ' ，無法顯示的數量為 ' + ignoreNum;
+    $('div#listNoneCunli').html(block);
 
     map.data.setStyle(function (feature) {
         color = ColorBar(feature.getProperty('num'));
