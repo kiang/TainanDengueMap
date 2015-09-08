@@ -1,9 +1,17 @@
 <?php
 
-$cunliCodes = array();
+$cunliCodes = $areaCodes = array();
 $fh = fopen(dirname(__DIR__) . '/data.tainan/cunli_code.csv', 'r');
+fgetcsv($fh, 2048);
 while ($line = fgetcsv($fh, 2048)) {
     $cunliCodes[$line[1] . $line[3] . $line[5]] = $line[4];
+    if (!isset($areaCodes[$line[1]])) {
+        $areaCodes[$line[1]] = str_pad($line[0], 5, '0', STR_PAD_RIGHT);
+    }
+    if (!isset($areaCodes[$line[1] . $line[3]])) {
+        $areaCodes[$line[1] . $line[3]] = $line[2];
+    }
+
 //    if(false !== strpos($line[1] . $line[3], '彰化縣員林')) {
 //        echo "{$line[5]}\n";
 //    }
@@ -40,29 +48,37 @@ $replaces = array(
     '高雄市湖內區公館里' => '高雄市湖內區公舘里',
     '台南市麻豆區晉江里' => '台南市麻豆區晋江里',
     '彰化縣員林鎮民生里' => '彰化縣員林市民生里',
+    '台東縣太麻里鄉' => '臺東縣太麻里鄉',
+    '台南市其他' => '台南市',
 );
 
-file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
+//file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
 
 $fh = fopen(__DIR__ . '/Dengue_Daily.csv', 'r');
 $areaCounter = $timeCounter = array();
 while ($line = fgetcsv($fh, 2048)) {
-    if (empty($line[7]))
-        continue;
+
     foreach ($line AS $k => $v) {
         $line[$k] = str_replace(array('　', ' '), '', $v);
     }
     $dayParts = explode('/', $line[2]);
     if ($dayParts[0] === '2015') {
+        if (empty($line[7])) {
+            $areaKey = $line[5] . $line[6];
+            $areaKey = strtr($areaKey, $replaces);
+            $areaKey = $areaCodes[$areaKey];
+        } else {
+            $areaKey = $line[5] . $line[6] . $line[7];
+            $areaKey = strtr($areaKey, $replaces);
+            $areaKey = $cunliCodes[$areaKey];
+        }
+
         $currentDay = implode('-', array(
             $dayParts[0],
             str_pad(intval($dayParts[1]), 2, '0', STR_PAD_LEFT),
             str_pad(intval($dayParts[2]), 2, '0', STR_PAD_LEFT),
         ));
 
-        $areaKey = $line[5] . $line[6] . $line[7];
-        $areaKey = strtr($areaKey, $replaces);
-        $areaKey = $cunliCodes[$areaKey];
 
         if (!isset($areaCounter[$areaKey])) {
             $areaCounter[$areaKey] = array(
