@@ -52,7 +52,7 @@ $replaces = array(
     '台南市其他' => '台南市',
 );
 
-//file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
+file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
 
 $fh = fopen(__DIR__ . '/Dengue_Daily.csv', 'r');
 $areaCounter = $timeCounter = array();
