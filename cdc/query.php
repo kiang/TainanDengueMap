@@ -50,6 +50,7 @@ $replaces = array(
     '彰化縣員林鎮民生里' => '彰化縣員林市民生里',
     '台東縣太麻里鄉' => '臺東縣太麻里鄉',
     '台南市其他' => '台南市',
+    '新竹縣竹東鎮上館里' => '新竹縣竹東鎮上舘里',
 );
 
 file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
