@@ -33,23 +33,28 @@ foreach ($cityCodes AS $cityCode => $city) {
         'city' => $city,
         'records' => array(),
     );
+    for ($i = 0; $i < 2; $i ++) {
+        $opts = array('http' =>
+            array(
+                'method' => 'POST',
+                'header' => "Content-type: application/json; charset=utf-8\r\n" .
+                "Referer: http://cdcdengue.azurewebsites.net/\r\n" .
+                "X-Requested-With: XMLHttpRequest",
+                'content' => "{citycode:'{$cityCode}', immigration: '{$i}'}"
+            )
+        );
 
-    $opts = array('http' =>
-        array(
-            'method' => 'POST',
-            'header' => "Content-type: application/json; charset=utf-8\r\n" .
-            "Referer: http://cdcdengue.azurewebsites.net/\r\n" .
-            "X-Requested-With: XMLHttpRequest",
-            'content' => "{citycode:'{$cityCode}', immigration: '2'}"
-        )
-    );
+        $context = stream_context_create($opts);
 
-    $context = stream_context_create($opts);
+        $result = file_get_contents('http://cdcdengue.azurewebsites.net/DengueData.asmx/GetDengueLocation', false, $context);
 
-    $result = file_get_contents('http://cdcdengue.azurewebsites.net/DengueData.asmx/GetDengueLocation', false, $context);
-
-    $json = json_decode($result);
-    $data[$cityCode]['records'] = json_decode($json->d, true);
+        $json = json_decode($result);
+        $records = json_decode($json->d, true);
+        foreach ($records AS $record) {
+            $record['immigration'] = $i;
+            $data[$cityCode]['records'][] = $record;
+        }
+    }
 }
 
 file_put_contents(__DIR__ . '/points.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
