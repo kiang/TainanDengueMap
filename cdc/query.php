@@ -12,8 +12,8 @@ while ($line = fgetcsv($fh, 2048)) {
         $areaCodes[$line[1] . $line[3]] = $line[2];
     }
 
-//    if(false !== strpos($line[1] . $line[3], '彰化縣員林')) {
-//        echo "{$line[5]}\n";
+//    if (false !== strpos($line[1] . $line[3], '台南市新化區')) {
+//        echo "{$line[5]}:{$line[2]}\n";
 //    }
 }
 fclose($fh);
@@ -53,6 +53,10 @@ $replaces = array(
     '新竹縣竹東鎮上館里' => '新竹縣竹東鎮上舘里',
 );
 
+$codeMap = array(
+    '台南市新化區那拔里' => '6701800',
+);
+
 file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
 
 $fh = fopen(__DIR__ . '/Dengue_Daily.csv', 'r');
@@ -71,7 +75,11 @@ while ($line = fgetcsv($fh, 2048)) {
         } else {
             $areaKey = $line[5] . $line[6] . $line[7];
             $areaKey = strtr($areaKey, $replaces);
-            $areaKey = $cunliCodes[$areaKey];
+            if (isset($codeMap[$areaKey])) {
+                $areaKey = $codeMap[$areaKey];
+            } else {
+                $areaKey = $cunliCodes[$areaKey];
+            }
         }
 
         $currentDay = implode('-', array(
