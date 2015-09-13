@@ -51,10 +51,13 @@ $replaces = array(
     '台東縣太麻里鄉' => '臺東縣太麻里鄉',
     '台南市其他' => '台南市',
     '新竹縣竹東鎮上館里' => '新竹縣竹東鎮上舘里',
+    '彰化縣員林鎮' => '彰化縣員林市',
 );
 
 $codeMap = array(
-    '台南市新化區那拔里' => '6701800',
+    '台南市新化區那拔里' => '6701800-018',
+    '台南市山上區玉峰里' => '6702200-005',
+    '台南市新市區豊華里' => '6702000-005',
 );
 
 file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
