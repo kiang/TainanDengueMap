@@ -9,7 +9,11 @@ function ColorBar(value) {
         return "orange"
     else if (value <= 50)
         return "red"
-    else
+    else if (value <= 100)
         return "purple"
+    else if (value <= 200)
+        return "darkblue"
+    else
+        return "black"
     //return "rgb("+r+","+g+","+b+")";
 }
