@@ -19,22 +19,27 @@ while ($line = fgetcsv($fh, 2048)) {
 fclose($fh);
 /*
  * Array
-  (
-  [0] => 發病日
-  [1] => 個案研判日
-  [2] => 通報日
-  [3] => 性別
-  [4] => 年齡層
-  [5] => 居住縣市
-  [6] => 居住鄉鎮
-  [7] => 居住村里
-  [8] => 感染縣市
-  [9] => 感染鄉鎮
-  [10] => 感染村里
-  [11] => 是否境外移入
-  [12] => 感染國家
-  [13] => 確定病例數
-  )
+(
+    [0] => 發病日
+    [1] => 個案研判日
+    [2] => 通報日
+    [3] => 性別
+    [4] => 年齡層
+    [5] => 居住縣市
+    [6] => 居住鄉鎮
+    [7] => 居住村里
+    [8] => 最小統計區
+    [9] => 最小統計區中心點X
+    [10] => 最小統計區中心點Y
+    [11] => 一級統計區
+    [12] => 二級統計區
+    [13] => 感染縣市
+    [14] => 感染鄉鎮
+    [15] => 感染村里
+    [16] => 是否境外移入
+    [17] => 感染國家
+    [18] => 確定病例數
+)
  */
 
 $replaces = array(
@@ -95,22 +100,22 @@ while ($line = fgetcsv($fh, 2048)) {
 
         if (!isset($areaCounter[$areaKey])) {
             $areaCounter[$areaKey] = array(
-                'total' => $line[13],
+                'total' => $line[18],
                 'logs' => array(),
             );
         } else {
-            $areaCounter[$areaKey]['total'] += $line[13];
+            $areaCounter[$areaKey]['total'] += $line[18];
         }
 
         if (!isset($timeCounter[$currentDay])) {
-            $timeCounter[$currentDay] = $line[13];
+            $timeCounter[$currentDay] = $line[18];
         } else {
-            $timeCounter[$currentDay] += $line[13];
+            $timeCounter[$currentDay] += $line[18];
         }
         if (!isset($areaCounter[$areaKey]['logs'][$currentDay])) {
-            $areaCounter[$areaKey]['logs'][$currentDay] = $line[13];
+            $areaCounter[$areaKey]['logs'][$currentDay] = $line[18];
         } else {
-            $areaCounter[$areaKey]['logs'][$currentDay] += $line[13];
+            $areaCounter[$areaKey]['logs'][$currentDay] += $line[18];
         }
     }
 }
