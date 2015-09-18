@@ -15,23 +15,23 @@ $fh = fopen(__DIR__ . '/latest.csv', 'r');
 $currentArea = '';
 $total = 0;
 while ($line = fgetcsv($fh, 2048)) {
-    if (!empty($line[2])) {
-        $currentArea = $line[2];
+    if (!empty($line[0])) {
+        $currentArea = $line[0];
     }
-    if (mb_substr($line[5], -1, 1, 'utf-8') !== '里') {
+    if (mb_substr($line[3], -1, 1, 'utf-8') !== '里') {
         continue;
     }
-    $areaKey = "{$currentArea}{$line[5]}";
-    $line[7] = intval($line[7]);
+    $areaKey = "{$currentArea}{$line[3]}";
+    $line[5] = intval($line[5]);
     
-    if ($line[7] > 0) {
-        $total += $line[7];
+    if ($line[5] > 0) {
+        $total += $line[5];
         if (!isset($json[$areaKey])) {
             $json[$areaKey] = array();
         }
         $json[$areaKey][] = array(
             '2015-09-17',
-            $line[7],
+            $line[5],
         );
     }
 }
