@@ -3,11 +3,11 @@
 $json = json_decode(file_get_contents(dirname(__DIR__) . '/DengueTN.json'), true);
 
 /*
- * looking for 09-17 record
+ * looking for 09-18 record
  */
 foreach ($json['total'] AS $day) {
-    if ($day[0] === '2015-09-17') {
-        die('2015-09-17 record existed');
+    if ($day[0] === '2015-09-18') {
+        die('2015-09-18 record existed');
     }
 }
 
@@ -15,29 +15,29 @@ $fh = fopen(__DIR__ . '/latest.csv', 'r');
 $currentArea = '';
 $total = 0;
 while ($line = fgetcsv($fh, 2048)) {
-    if (!empty($line[0])) {
-        $currentArea = $line[0];
+    if (!empty($line[2])) {
+        $currentArea = $line[2];
     }
-    if (mb_substr($line[3], -1, 1, 'utf-8') !== '里') {
+    if (mb_substr($line[5], -1, 1, 'utf-8') !== '里') {
         continue;
     }
-    $areaKey = "{$currentArea}{$line[3]}";
-    $line[5] = intval($line[5]);
+    $areaKey = "{$currentArea}{$line[5]}";
+    $line[7] = intval($line[7]);
     
-    if ($line[5] > 0) {
-        $total += $line[5];
+    if ($line[7] > 0) {
+        $total += $line[7];
         if (!isset($json[$areaKey])) {
             $json[$areaKey] = array();
         }
         $json[$areaKey][] = array(
-            '2015-09-17',
-            $line[5],
+            '2015-09-18',
+            $line[7],
         );
     }
 }
 
 $json['total'][] = array(
-    '2015-09-17',
+    '2015-09-18',
     $total,
 );
 
