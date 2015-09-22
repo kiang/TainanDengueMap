@@ -3,6 +3,8 @@
 $rootPath = dirname(__DIR__);
 $now = date('Y-m-d H:i:s');
 
+exec("cd {$rootPath} && /usr/bin/git pull");
+
 exec("/usr/bin/php -q {$rootPath}/cdc/query.php");
 exec("/usr/bin/php -q {$rootPath}/cdc/points.php");
 exec("/usr/bin/php -q {$rootPath}/cdc/age_sum.php");
