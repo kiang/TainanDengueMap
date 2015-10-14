@@ -9,6 +9,7 @@ exec("/usr/bin/php -q {$rootPath}/cdc/query.php");
 exec("/usr/bin/php -q {$rootPath}/cdc/points.php");
 exec("/usr/bin/php -q {$rootPath}/cdc/age_sum.php");
 exec("/usr/bin/php -q {$rootPath}/cdc/cunli_rate.php");
+exec("/usr/bin/php -q {$rootPath}/cdc/cunli_sum.php");
 
 exec("cd {$rootPath} && /usr/bin/git add -A");
 

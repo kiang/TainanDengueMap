@@ -15,13 +15,17 @@ fgetcsv($fh, 2048);
 fgetcsv($fh, 2048);
 
 $dengue = json_decode(file_get_contents(dirname(__DIR__) . '/taiwan/Dengue.json'), true);
-$cunliRateFh = fopen(__DIR__ . '/cunli_rate.csv', 'w');
-fputcsv($cunliRateFh, array(
+$cunliSumFh = fopen(__DIR__ . '/cunli_sum.csv', 'w');
+fputcsv($cunliSumFh, array(
+    '日期',
     '村里代碼',
     '村里',
-    '人口數',
     '病例數',
-    '發生率',
+    '上週同期',
+    '增減',
+    '增加天數',
+    '一週小計',
+    '增減',
 ));
 
 while ($line = fgetcsv($fh, 2048)) {
@@ -66,18 +70,49 @@ while ($line = fgetcsv($fh, 2048)) {
     }
     if (isset($dengue[$cunliCode])) {
         $line[4] = intval($line[4]);
-        $sum = 0;
+        $cunliStack = array();
         foreach ($dengue[$cunliCode] AS $day) {
-            $sum += $day[1];
+            $uTime = strtotime($day[0]);
+            $yDay = date('z', $uTime);
+            (int) $lastWeekDay = $yDay - 7;
+            $day[1] = intval($day[1]);
+            (boolean) $isIncreased = isset($cunliStack[$lastWeekDay]) && $cunliStack[$lastWeekDay][1] <= $day[1];
+            $cunliStack[$yDay] = array(
+                $uTime,
+                $day[1],
+                $isIncreased,
+            );
         }
-
-        fputcsv($cunliRateFh, array(
-            $cunliCode,
-            $code2name[$cunliCode],
-            $line[4],
-            $sum,
-            round($sum / $line[4], 6),
-        ));
+        foreach ($cunliStack AS $day => $vals) {
+            (int) $lastWeekDay = $day - 7;
+            (int) $lastWeekNum = isset($cunliStack[$lastWeekDay]) ? $cunliStack[$lastWeekDay][1] : 0;
+            (int) $lastWeekDiff = $vals[1] - $lastWeekNum;
+            $weekSum = $increasedDays = $lastWeekSum = 0;
+            for ($i = $lastWeekDay + 1; $i <= $day; $i++) {
+                if (isset($cunliStack[$i])) {
+                    if (true === $cunliStack[$i][2]) {
+                        ++$increasedDays;
+                    }
+                    $weekSum += $cunliStack[$i][1];
+                }
+            }
+            for ($i = $lastWeekDay - 6; $i <= $lastWeekDay; $i++) {
+                if (isset($cunliStack[$i])) {
+                    $lastWeekSum += $cunliStack[$i][1];
+                }
+            }
+            fputcsv($cunliSumFh, array(
+                date('Y-m-d', $vals[0]),
+                $cunliCode,
+                $code2name[$cunliCode],
+                $vals[1],
+                $lastWeekNum,
+                $lastWeekDiff,
+                $increasedDays,
+                $weekSum,
+                $weekSum - $lastWeekSum,
+            ));
+        }
     }
 }
 fclose($fh);
