@@ -34,7 +34,7 @@ foreach ($resources AS $ym => $uuid) {
         //file_put_contents($rawFile, file_get_contents($urlBase . '/' . $uuid . '/download'));
     }
     $fh = fopen($rawFile, 'r');
-    fgetcsv($fh, 2048);
+    $headers = fgetcsv($fh, 2048);
     while ($line = fgetcsv($fh, 2048)) {
         /*
          * get date/time
@@ -51,7 +51,18 @@ foreach ($resources AS $ym => $uuid) {
                 'cunlis' => array(),
             );
         }
-        $data[$lineDayTime]['points'][] = $line;
+        if (count($headers) !== count($line)) {
+            $line[] = '';
+        }
+
+        $point = array_combine($headers, $line);
+        $data[$lineDayTime]['points'][] = array(
+            'date' => $point['日期'],
+            'time' => $point['集合時間'],
+            'location' => $point['集合地點'],
+            'lat' => $point['緯度'],
+            'lng' => $point['經度'],
+        );
         /*
          * get cunli code
          */

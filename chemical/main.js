@@ -75,10 +75,10 @@ function showOverlays() {
 
     for (i in overlays[currentOverlayIndex]['points']) {
         if (false === isTitleSet) {
-            $('#title').html(overlays[currentOverlayIndex]['points'][i][4]);
+            $('#title').html(overlays[currentOverlayIndex]['points'][i]['date']);
             isTitleSet = true;
         }
-        var latLng = new google.maps.LatLng(overlays[currentOverlayIndex]['points'][i][14], overlays[currentOverlayIndex]['points'][i][13]);
+        var latLng = new google.maps.LatLng(overlays[currentOverlayIndex]['points'][i]['lat'], overlays[currentOverlayIndex]['points'][i]['lng']);
         var marker = new google.maps.Marker({
             position: latLng,
             clickable: true,
@@ -88,8 +88,8 @@ function showOverlays() {
         marker.info = overlays[currentOverlayIndex]['points'][i];
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
             return function () {
-                var info = '<b>時間：</b>' + marker.info[6];
-                info += '<br /><b>地點：</b>' + marker.info[7];
+                var info = '<b>集合時間：</b>' + marker.info['time'];
+                info += '<br /><b>集合地點：</b>' + marker.info['location'];
                 infowindow.setContent(info);
                 infowindow.open(map, marker);
             }
