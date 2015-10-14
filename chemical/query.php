@@ -30,8 +30,7 @@ foreach ($resources AS $ym => $uuid) {
     $rawFile = $rawPath . '/' . $ym . '.csv';
     if (false === $isLatestDone || !file_exists($rawFile)) {
         $isLatestDone = true;
-        echo "getting {$rawFile}\n";
-        //file_put_contents($rawFile, file_get_contents($urlBase . '/' . $uuid . '/download'));
+        file_put_contents($rawFile, file_get_contents($urlBase . '/' . $uuid . '/download'));
     }
     $fh = fopen($rawFile, 'r');
     $headers = fgetcsv($fh, 2048);
