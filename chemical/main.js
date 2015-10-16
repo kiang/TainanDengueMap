@@ -59,6 +59,7 @@ function initialize() {
                         indexFounded = true;
                         currentOverlayIndex = j;
                         showOverlays();
+                        $('#content').html('');
                     }
                 }
             }
