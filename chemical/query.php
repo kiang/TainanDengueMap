@@ -18,11 +18,15 @@ if (!file_exists($rawPath)) {
     mkdir($rawPath, 0777, true);
 }
 $urlBase = 'http://data.tainan.gov.tw/dataset/4c260d97-e268-4b4a-8b15-c0fc92a25120/resource';
-$resources = array(
-    '201510' => '4b0c980a-ca26-4bac-992b-17b3c923b4f1',
-    '201509' => '65660288-b205-4ef4-95cc-c5560aec57c9',
-    '201508' => 'a0728d53-3a39-4b4a-9558-72ace6327414',
-);
+$resources = array();
+$dataset = json_decode(file_get_contents('http://data.tainan.gov.tw/api/action/package_show?id=4c260d97-e268-4b4a-8b15-c0fc92a25120'), true);
+foreach($dataset['result']['resources'] AS $resource) {
+    $parts = explode('年', substr($resource['name'], 0, strpos($resource['name'], '月')));
+    $parts[0] += 1911;
+    $key = $parts[0] . str_pad($parts[1], 2, '0', STR_PAD_LEFT);
+    $resources[$key] = $resource['id'];
+}
+krsort($resources);
 $isLatestDone = false;
 $data = array();
 
