@@ -48,6 +48,25 @@ function initialize() {
             showOverlays();
         }
     });
+    $('input#selectDate').datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function(txt) {
+            var indexFounded = false;
+            var strToFind = txt.substring(5).replace('-', '月');
+            for(j in overlays) {
+                if(false === indexFounded && overlays[j]['points'][0]) {
+                    if(-1 !== overlays[j]['points'][0]['date'].indexOf(strToFind)) {
+                        indexFounded = true;
+                        currentOverlayIndex = j;
+                        showOverlays();
+                    }
+                }
+            }
+            if(false === indexFounded) {
+                $('#content').html('選擇的日期沒有噴藥行程');
+            }
+        }
+    });
 }
 
 function showOverlays() {

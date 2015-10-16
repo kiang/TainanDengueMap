@@ -9,6 +9,7 @@
         <meta property="og:type" content="website">
         <meta property="og:image" content="http://kiang.github.io/TainanDengueMap/chemical/og_image.png">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <style>
             html, body {
                 height: 100%;
@@ -20,26 +21,9 @@
                 height: 100%;
                 width: 100%;
             }
-            #histogram {
-                height: 40%;
-                width: 100%;
-                min-height: 300px;
-            }
-            #myTabContent {
-                height: 85%;
-                width: 100%;
-                min-height: 300px;
-            }
             #title {
                 text-align: center;
                 padding: 10px;
-            }
-            .colorBox {
-                width: 1em;
-                height: 1em;
-                border: 1px solid #34495E;
-                display: inline-block;
-                margin: 0 3px;
             }
         </style>
     </head>
@@ -63,7 +47,10 @@
                     <div class="col-md-8 col-sm-12 col-xs-12">
                         <h3 id="title"></h3>
                         <hr>
-                        <h2 id="content" class="text-muted">在地圖上滑動或點選以顯示數據</h2>
+                        <h2 class="text-muted">
+                            <span class="col-md-8" id="content">在地圖上滑動或點選以顯示數據</span>
+                            <input type="text" class="col-md-4" id="selectDate" />
+                        </h2>
                         <div class="btn-group btn-group-justified">
                             <a class="btn btn-primary btn-lg" id="btnPrevious" href="#" title="前一天">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
@@ -90,6 +77,7 @@
             </div>
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//maps.googleapis.com/maps/api/js?v=3"></script>
         <script src="main.js"></script>
