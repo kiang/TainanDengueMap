@@ -52,10 +52,9 @@ function initialize() {
         dateFormat: 'yy-mm-dd',
         onSelect: function(txt) {
             var indexFounded = false;
-            var strToFind = txt.substring(5).replace('-', '月');
             for(j in overlays) {
                 if(false === indexFounded && overlays[j]['points'][0]) {
-                    if(-1 !== overlays[j]['points'][0]['date'].indexOf(strToFind)) {
+                    if(overlays[j]['points'][0]['date'] === txt) {
                         indexFounded = true;
                         currentOverlayIndex = j;
                         showOverlays();

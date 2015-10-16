@@ -60,7 +60,7 @@ foreach ($resources AS $ym => $uuid) {
 
         $point = array_combine($headers, $line);
         $data[$lineDayTime]['points'][] = array(
-            'date' => $point['日期'],
+            'date' => date('Y-m-d', $lineDayTime),
             'time' => $point['集合時間'],
             'location' => $point['集合地點'],
             'lat' => $point['緯度'],
@@ -80,4 +80,4 @@ foreach ($resources AS $ym => $uuid) {
 
 krsort($data);
 $data = array_values($data);
-file_put_contents(__DIR__ . '/overlays.json', json_encode($data));
+file_put_contents(__DIR__ . '/overlays.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
