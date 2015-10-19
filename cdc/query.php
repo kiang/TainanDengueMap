@@ -1,9 +1,10 @@
 <?php
 
-$cunliCodes = $areaCodes = array();
+$cunliCodes = $areaCodes = $codeCheck = array();
 $fh = fopen(dirname(__DIR__) . '/data.tainan/cunli_code.csv', 'r');
 fgetcsv($fh, 2048);
 while ($line = fgetcsv($fh, 2048)) {
+    $codeCheck[$line[4]] = true;
     $cunliCodes[$line[1] . $line[3] . $line[5]] = $line[4];
     if (!isset($areaCodes[$line[1]])) {
         $areaCodes[$line[1]] = str_pad($line[0], 5, '0', STR_PAD_RIGHT);
@@ -19,27 +20,29 @@ while ($line = fgetcsv($fh, 2048)) {
 fclose($fh);
 /*
  * Array
-(
-    [0] => 發病日
-    [1] => 個案研判日
-    [2] => 通報日
-    [3] => 性別
-    [4] => 年齡層
-    [5] => 居住縣市
-    [6] => 居住鄉鎮
-    [7] => 居住村里
-    [8] => 最小統計區
-    [9] => 最小統計區中心點X
-    [10] => 最小統計區中心點Y
-    [11] => 一級統計區
-    [12] => 二級統計區
-    [13] => 感染縣市
-    [14] => 感染鄉鎮
-    [15] => 感染村里
-    [16] => 是否境外移入
-    [17] => 感染國家
-    [18] => 確定病例數
-)
+  (
+  [0] => 發病日
+  [1] => 個案研判日
+  [2] => 通報日
+  [3] => 性別
+  [4] => 年齡層
+  [5] => 居住縣市
+  [6] => 居住鄉鎮
+  [7] => 居住村里
+  [8] => 最小統計區
+  [9] => 最小統計區中心點X
+  [10] => 最小統計區中心點Y
+  [11] => 一級統計區
+  [12] => 二級統計區
+  [13] => 感染縣市
+  [14] => 感染鄉鎮
+  [15] => 感染村里
+  [16] => 是否境外移入
+  [17] => 感染國家
+  [18] => 確定病例數
+  [19] => 居住村里代碼
+  [20] => 感染村里代碼
+  )
  */
 
 $replaces = array(
@@ -86,6 +89,8 @@ while ($line = fgetcsv($fh, 2048)) {
             $areaKey = $line[5] . $line[6];
             $areaKey = strtr($areaKey, $replaces);
             $areaKey = $areaCodes[$areaKey];
+        } elseif (!empty($line[19]) && isset($codeCheck[$line[19]])) {
+            $areaKey = $line[19];
         } else {
             $areaKey = $line[5] . $line[6] . $line[7];
             $areaKey = strtr($areaKey, $replaces);
