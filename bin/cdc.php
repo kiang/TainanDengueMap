@@ -10,7 +10,9 @@ exec("/usr/bin/php -q {$rootPath}/cdc/points.php");
 exec("/usr/bin/php -q {$rootPath}/cdc/age_sum.php");
 exec("/usr/bin/php -q {$rootPath}/cdc/cunli_rate.php");
 exec("/usr/bin/php -q {$rootPath}/cdc/cunli_sum.php");
+
 exec("/usr/bin/php -q {$rootPath}/chemical/query.php");
+exec("/usr/bin/php -q {$rootPath}/scripts/auto_query.php");
 
 exec("cd {$rootPath} && /usr/bin/git add -A");
 
