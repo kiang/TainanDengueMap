@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>臺南市登革熱戶外化學防疫軌跡記錄地圖</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <meta property="og:title" content="臺南市登革熱戶外化學防疫軌跡記錄地圖">
+        <meta property="og:description" content="臺南市登革熱戶外化學防疫軌跡記錄地圖試著要呈現軌跡記錄資訊，藉此得知噴藥的涵蓋範圍">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="http://kiang.github.io/lead_pipes/og_image.png">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <style>
+            #map-canvas {
+                height: 100%;
+                width: 100%;
+            }
+            #title {
+                text-align: center;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=1393405437614114&version=v2.3";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, "script", "facebook-jssdk"));
+        </script>
+        <div class="container">
+            <div class="row">
+                <p class="hidden-sm hidden-xs">&nbsp;</p>
+                <div id="map-canvas" class="col-md-12"></div>
+                <div id="detail" class="col-md-12">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        <div style="float: right;">&nbsp;</div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <h2 class="text-muted">
+                            <span class="col-md-12" id="content">在地圖上滑動或點選以顯示數據</span>
+                        </h2>
+                        <div class="clearfix"></div>
+                        <div class="panel panel-danger">
+                            <div class="panel-body" id="dangerBody">&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <p>&nbsp;</p>
+                        <div id="fb-root"></div>
+                        <div class="fb-page" data-href="https://www.facebook.com/k.olc.tw" data-width="800" data-hide-cover="true" data-show-facepile="true" data-show-posts="false"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="https://github.com/kiang/TainanDengueMap" target="_blank">網站原始碼</a>
+                | <a href="http://data.tainan.gov.tw/dataset/dengue-chemical-prevention" target="_blank">資料來源</a>
+            </div>
+        </div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="//maps.googleapis.com/maps/api/js?v=3"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
