@@ -36,7 +36,6 @@ foreach ($dataset['result']['resources'] AS $resource) {
             if ($currentPoint === $lastPoint) {
                 continue;
             }
-            $lastPoint = $currentPoint;
             $pointTime = strtotime($line[4]);
             $weekNum = date('YW', $pointTime);
             if (!isset($data[$weekNum])) {
@@ -57,11 +56,14 @@ foreach ($dataset['result']['resources'] AS $resource) {
                         $currentPoint
                     ),
                 );
+            } elseif (isset($lastPoint[1]) && getDistance($currentPoint[1], $currentPoint[0], $lastPoint[1], $lastPoint[0]) > 1.5) {
+                continue;
             } else {
                 $data[$weekNum][$lastKey]['timeEnd'] = $line[4];
                 $data[$weekNum][$lastKey]['points'][] = $currentPoint;
             }
             $lastTime = $pointTime;
+            $lastPoint = $currentPoint;
         }
     }
 }
@@ -92,4 +94,17 @@ foreach ($data AS $weekNum => $weekData) {
         $fc->features[] = $f;
     }
     file_put_contents($yPath . '/' . $weekNum . '.json', json_encode($fc, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+}
+
+/*
+ * function from http://www.mapanet.eu/EN/Resources/Script-Distance.htm
+ */
+
+function getDistance($lat1, $lon1, $lat2, $lon2) {
+
+    $radius = 6378.137; // earth mean radius defined by WGS84
+    $dlon = $lon1 - $lon2;
+    $distance = acos(sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($dlon))) * $radius;
+
+    return $distance; //kilometers
 }
