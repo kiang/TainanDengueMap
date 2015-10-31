@@ -1,18 +1,24 @@
 <?php
 
 $json = json_decode(file_get_contents(dirname(__DIR__) . '/DengueTN.json'), true);
+unset($json['total']);
 
-$total = 0;
-$stack = array();
+$stack = $total = array();
 foreach ($json AS $cunli => $logs) {
     if (!isset($stack[$cunli])) {
         $stack[$cunli] = array();
     }
     foreach ($logs AS $log) {
+        if (!isset($total[$log[0]])) {
+            $total[$log[0]] = 0;
+        }
+        $total[$log[0]] += $log[1];
         $stack[$cunli][$log[0]] = $log[1];
     }
     ksort($stack[$cunli]);
 }
+ksort($total);
+$stack['total'] = $total;
 
 foreach ($stack AS $cunli => $logs) {
     $json[$cunli] = array();
