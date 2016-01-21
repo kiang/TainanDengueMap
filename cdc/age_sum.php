@@ -105,7 +105,7 @@ $cityCase = array();
 $fh = fopen(__DIR__ . '/Dengue_Daily.csv', 'r');
 fgetcsv($fh, 2048);
 while ($line = fgetcsv($fh, 2048)) {
-    if (substr($line[2], 0, 4) === '2015') {
+    if (substr($line[2], 0, 4) === '2016') {
         switch ($line[5]) {
             case '台北市':
                 $line[5] = '臺北市';
@@ -128,7 +128,7 @@ while ($line = fgetcsv($fh, 2048)) {
 }
 fclose($fh);
 
-$fh = fopen(__DIR__ . '/city_age_rate_2015.csv', 'w');
+$fh = fopen(__DIR__ . '/city_age_rate_2016.csv', 'w');
 fputcsv($fh, array(
     '縣市', '年齡', '人口數', '病例數', '比率'
 ));
