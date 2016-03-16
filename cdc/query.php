@@ -154,4 +154,4 @@ foreach ($timeCounter AS $date => $val) {
     );
 }
 
-file_put_contents(dirname(__DIR__) . '/taiwan/Dengue.json', json_encode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+file_put_contents(dirname(__DIR__) . '/Dengue.json', json_encode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
