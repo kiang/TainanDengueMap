@@ -2,7 +2,7 @@ $.ajaxSetup({async: false});
 
 var map, infowindow = new google.maps.InfoWindow();
 
-$.getJSON('../cdc/points.min.json', function (data) {
+$.getJSON('../../cdc/points.min.json', function (data) {
     points = data;
 });
 
