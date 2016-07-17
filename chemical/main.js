@@ -13,7 +13,7 @@ function initialize() {
         center: {lat: 23.00, lng: 120.30}
     });
 
-    $.getJSON('../cunliTN.json', function (data) {
+    $.getJSON('../tainan/2015/cunliTN.json', function (data) {
         cunli = map.data.addGeoJson(data);
     });
 
@@ -39,7 +39,7 @@ function initialize() {
             showOverlays();
         }
     });
-    
+
     $('a#btnNext').click(function () {
         currentOverlayIndex -= 1;
         if (currentOverlayIndex < 0) {
@@ -87,7 +87,7 @@ function showOverlays() {
             strokeWeight: 1
         }
     });
-    
+
     for(i in markers) {
         markers[i].setMap(null);
     }
