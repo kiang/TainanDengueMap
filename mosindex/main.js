@@ -68,7 +68,7 @@ var map,
             'Con100HH': '每百戶積水容器數'
         };
 
-$.getJSON('json/2015.json', function (data) {
+$.getJSON('json/2016.json', function (data) {
     mosIndex = data;
 });
 function initialize() {
@@ -81,7 +81,7 @@ function initialize() {
         center: {lat: 23.00, lng: 120.30}
     });
 
-    $.getJSON('../taiwan/cunli.json', function (data) {
+    $.getJSON('../taiwan/2015/cunli.json', function (data) {
         cunli = map.data.addGeoJson(topojson.feature(data, data.objects.cunli));
     });
 
@@ -156,7 +156,7 @@ function updateNum() {
             strokeWeight: 1
         }
     });
-    
+
     $('a', $('#keyButtons')).each(function() {
         var buttonKey = $(this).attr('data-key');
         if(buttonKey === currentKey) {
