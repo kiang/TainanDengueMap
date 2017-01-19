@@ -68,7 +68,9 @@ var map,
             'Con100HH': '每百戶積水容器數'
         };
 
-$.getJSON('json/2016.json', function (data) {
+var currentYear = new Date().getFullYear();
+
+$.getJSON('json/' + currentYear + '.json', function (data) {
     mosIndex = data;
 });
 function initialize() {
