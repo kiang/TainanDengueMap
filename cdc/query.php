@@ -74,14 +74,7 @@ $codeMap = array(
     '苗栗縣三義鄉雙湖村' => '1000513-002',
 );
 
-$arrContextOptions=array(
-    "ssl"=>array(
-        "verify_peer"=>false,
-        "verify_peer_name"=>false,
-    ),
-);
-
-file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('https://nidss.cdc.gov.tw/download/Dengue_Daily.csv', false, stream_context_create($arrContextOptions)));
+file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
 
 $fh = fopen(__DIR__ . '/Dengue_Daily.csv', 'r');
 $areaCounter = $timeCounter = array();
@@ -91,7 +84,7 @@ while ($line = fgetcsv($fh, 2048)) {
         $line[$k] = str_replace(array('　', ' '), '', $v);
     }
     $dayParts = explode('/', $line[2]);
-    if ($dayParts[0] === '2017') {
+    if ($dayParts[0] === '2018') {
         if (empty($line[7])) {
             $areaKey = $line[5] . $line[6];
             $areaKey = strtr($areaKey, $replaces);
