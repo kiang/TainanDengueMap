@@ -51,7 +51,14 @@
 $rootPath = dirname(__DIR__);
 //$fh = fopen($rootPath . '/raw/MosIndex_All.csv', 'r');
 
-file_put_contents($rootPath . '/raw/MosIndex_All_last12m.csv', file_get_contents('http://nidss.cdc.gov.tw/download/MosIndex/MosIndex_All_last12m.csv'));
+$arrContextOptions=array(
+    "ssl"=>array(
+        "verify_peer"=>false,
+        "verify_peer_name"=>false,
+    ),
+);
+
+file_put_contents($rootPath . '/raw/MosIndex_All_last12m.csv', file_get_contents('https://nidss.cdc.gov.tw/download/MosIndex/MosIndex_All_last12m.csv', false, stream_context_create($arrContextOptions)));
 $fh = fopen($rootPath . '/raw/MosIndex_All_last12m.csv', 'r');
 
 $headers = fgetcsv($fh, 2048);

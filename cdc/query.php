@@ -74,7 +74,14 @@ $codeMap = array(
     '苗栗縣三義鄉雙湖村' => '1000513-002',
 );
 
-file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('http://nidss.cdc.gov.tw/download/Dengue_Daily.csv'));
+$arrContextOptions=array(
+    "ssl"=>array(
+        "verify_peer"=>false,
+        "verify_peer_name"=>false,
+    ),
+);
+
+file_put_contents(__DIR__ . '/Dengue_Daily.csv', file_get_contents('https://nidss.cdc.gov.tw/download/Dengue_Daily.csv', false, stream_context_create($arrContextOptions)));
 
 $fh = fopen(__DIR__ . '/Dengue_Daily.csv', 'r');
 $areaCounter = $timeCounter = array();
