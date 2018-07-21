@@ -85,6 +85,9 @@ while ($line = fgetcsv($fh, 2048)) {
     }
     $dayParts = explode('/', $line[2]);
     if ($dayParts[0] === '2018') {
+      if($line[7] === 'None') {
+        $line[7] = '';
+      }
         if (empty($line[7])) {
             $areaKey = $line[5] . $line[6];
             $areaKey = strtr($areaKey, $replaces);
