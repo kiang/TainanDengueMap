@@ -84,7 +84,7 @@ while ($line = fgetcsv($fh, 2048)) {
         $line[$k] = str_replace(array('　', ' '), '', $v);
     }
     $dayParts = explode('/', $line[2]);
-    if ($dayParts[0] === '2018') {
+    if ($dayParts[0] === '2019') {
       if($line[7] === 'None') {
         $line[7] = '';
       }
